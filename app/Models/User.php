@@ -66,4 +66,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class);
     }
+
+    /**
+     * Mutators $user->is_admin
+     * @return Attribute
+     */
+    public function isAdmin(): Attribute
+    {
+        return new Attribute(
+            get: fn() => $this->role->id === Role::admin()->first()->id
+        );
+    }
 }
