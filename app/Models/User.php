@@ -67,10 +67,14 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
-    public function fullName(): Attribute
+    /**
+     * Mutators $user->is_admin
+     * @return Attribute
+     */
+    public function isAdmin(): Attribute
     {
         return new Attribute(
-            get: fn() => $this->name . ' ' . $this->surname
+            get: fn() => $this->role->id === Role::admin()->first()->id
         );
     }
 }
