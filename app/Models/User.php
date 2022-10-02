@@ -67,10 +67,10 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
-    public function age(): Attribute
+    public function fullName(): Attribute
     {
         return new Attribute(
-            get: fn() => 19
+            get: fn() => $this->name . ' ' . $this->surname
         );
     }
 }
