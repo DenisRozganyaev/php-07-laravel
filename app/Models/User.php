@@ -66,11 +66,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class);
     }
-
-    public function age(): Attribute
-    {
-        return new Attribute(
-            get: fn() => 19
-        );
-    }
 }
