@@ -14,11 +14,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/', function(){
-    $order = Order::all()->last();
-    OrderCreatedEvent::dispatch($order);
-})->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('job', function() {
+//    dd('work');
+    \Cache::store('redis')->put('Laradock', 'Awesome', 10);
+//   $order = Order::all()->last();
+//   \App\Jobs\OrderCreatedJob::dispatch($order)->onQueue('email'); // queue: default
+});
 
 Auth::routes();
 
@@ -41,6 +44,16 @@ Route::middleware('auth')->group(function() {
 
    Route::get('/order/{order}/invoice', \App\Http\Controllers\Invoices\DownloadInvoiceController::class)
        ->name('orders.generate.invoice');
+
+   Route::name('account.')->prefix('account')->group(function() {
+      Route::get('/', [\App\Http\Controllers\Account\UsersController::class, 'index'])->name('index');
+      Route::get('{user}/edit', [\App\Http\Controllers\Account\UsersController::class, 'edit'])
+          ->middleware('can:view,user')
+          ->name('edit');
+      Route::put('{user}', [\App\Http\Controllers\Account\UsersController::class, 'update'])
+          ->middleware('can:update,user')
+          ->name('update');
+   });
 });
 
 Route::name('admin.')->prefix('admin')->middleware(['auth', 'admin'])->group(function() {
