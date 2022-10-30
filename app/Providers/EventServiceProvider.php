@@ -25,13 +25,13 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         OrderCreatedEvent::class => [
-            OrderCreatedEmailListener::class
-        ]
+            OrderCreatedEmailListener::class,
+        ],
     ];
 
     protected $observers = [
         Image::class => [ImageObserver::class],
-        Product::class => [ProductObserver::class]
+        Product::class => [ProductObserver::class],
     ];
 
     /**

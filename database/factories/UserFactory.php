@@ -36,27 +36,27 @@ class UserFactory extends Factory
 
     public function admin()
     {
-        return $this->state(function(array $attributes) {
+        return $this->state(function (array $attributes) {
             return [
-                'role_id' => Role::admin()->first()->id
+                'role_id' => Role::admin()->first()->id,
             ];
         });
     }
 
     public function withEmail(string $email)
     {
-        return $this->state(function(array $attrs) use ($email) {
+        return $this->state(function (array $attrs) use ($email) {
             return [
-                'email' => $email
+                'email' => $email,
             ];
         });
     }
 
     public function withPassword(string $password)
     {
-        return $this->state(function(array $attrs) use ($password) {
+        return $this->state(function (array $attrs) use ($password) {
             return [
-                'password' => Hash::make($password)
+                'password' => Hash::make($password),
             ];
         });
     }

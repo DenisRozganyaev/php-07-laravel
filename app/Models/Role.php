@@ -13,7 +13,7 @@ class Role extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'name'
+        'name',
     ];
 
     // Relation with user model
@@ -27,6 +27,7 @@ class Role extends Model
      * SELECT * FROM roles WHERE name = 'Admin' LIMIT 1
      * Role::first();
      * SELECT * FROM roles LIMIT 1
+     *
      * @param $query
      */
     public function scopeAdmin($query)

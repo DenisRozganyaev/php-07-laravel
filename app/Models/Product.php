@@ -21,7 +21,7 @@ class Product extends Model
         'discount',
         'thumbnail',
         'in_stock',
-        'SKU'
+        'SKU',
     ];
 
     protected $guarded = [];
@@ -41,9 +41,19 @@ class Product extends Model
         return $this->belongsToMany(Order::class);
     }
 
+    public function followers()
+    {
+        return $this->belongsToMany(
+            User::class,
+            'wish_list',
+            'product_id',
+            'user_id'
+        );
+    }
+
     public function setThumbnailAttribute($image)
     {
-        if (!empty($this->attributes['thumbnail'])) {
+        if (! empty($this->attributes['thumbnail'])) {
             FileStorageService::remove($this->attributes['thumbnail']);
         }
 
@@ -52,19 +62,26 @@ class Product extends Model
 
     public function thumbnailUrl(): Attribute
     {
-        return new Attribute(get: fn() => Storage::url($this->attributes['thumbnail']));
+        return new Attribute(get: fn () => Storage::url($this->attributes['thumbnail']));
     }
 
     public function endPrice(): Attribute
     {
         return new Attribute(
-            get: function() {
+            get: function () {
                 $price = is_null($this->attributes['discount']) || $this->attributes['discount'] === 0
                     ? $this->attributes['price']
                     : ($this->attributes['price'] - ($this->attributes['price'] * ($this->attributes['discount'] / 100)));
 
                 return $price < 0 ? 1 : round($price, 2);
             }
+        );
+    }
+
+    public function available(): Attribute
+    {
+        return new Attribute(
+            get: fn() => $this->attributes['in_stock'] > 0
         );
     }
 }

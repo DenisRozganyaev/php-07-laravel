@@ -11,7 +11,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 class OrderRepository implements OrderRepositoryContract
 {
     const ORDER_STATUSES = [
-        'completed' => 'COMPLETED'
+        'completed' => 'COMPLETED',
     ];
 
     public function create(array $request, float $total): Order|bool
@@ -20,8 +20,8 @@ class OrderRepository implements OrderRepositoryContract
         $status = OrderStatus::defaultStatus()->first();
 
         $request = array_merge($request, [
-           'status_id' => $status->id,
-           'total' => $total
+            'status_id' => $status->id,
+            'total' => $total,
         ]);
 
         $order = $user->orders()->create($request);
@@ -38,8 +38,8 @@ class OrderRepository implements OrderRepositoryContract
 
         if ($adapter->status === self::ORDER_STATUSES['completed']) {
             $order->update([
-               'status_id' => OrderStatus::paidStatus()->firstOrFail()?->id,
-               'transaction_id' => $transaction->id
+                'status_id' => OrderStatus::paidStatus()->firstOrFail()?->id,
+                'transaction_id' => $transaction->id,
             ]);
         }
 
@@ -54,12 +54,12 @@ class OrderRepository implements OrderRepositoryContract
                 $cartItem->model, // Product
                 [
                     'quantity' => $cartItem->qty,
-                    'single_price' => $cartItem->model->endPrice
+                    'single_price' => $cartItem->model->endPrice,
                 ]
             );
             $inStock = $cartItem->model->in_stock - $cartItem->qty;
 
-            if (!$cartItem->model->update(['in_stock' => $inStock])) {
+            if (! $cartItem->model->update(['in_stock' => $inStock])) {
                 throw new \Exception("Smth went wrong with product (id={$cartItem->model->id}) in_stock update");
             }
         });

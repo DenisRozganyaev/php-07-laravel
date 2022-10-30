@@ -28,6 +28,6 @@ class Image extends Model
 
     public function url(): Attribute
     {
-        return new Attribute(get: fn() => Storage::url($this->attributes['path']));
+        return new Attribute(get: fn () => Storage::url($this->attributes['path']));
     }
 }

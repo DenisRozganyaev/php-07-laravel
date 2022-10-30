@@ -11,11 +11,14 @@ use Illuminate\Support\Facades\DB;
 
 class ProductRepository implements ProductRepositoryContract
 {
-    public function __construct(protected Product $product) {}
+    public function __construct(protected Product $product)
+    {
+    }
 
     /**
-     * @param CreateProductRequest $request
+     * @param  CreateProductRequest  $request
      * @return Product|bool
+     *
      * @throws \Throwable
      */
     public function create(CreateProductRequest $request): Product|bool
@@ -35,14 +38,16 @@ class ProductRepository implements ProductRepositoryContract
         } catch (\Exception $e) {
             DB::rollBack();
             logs()->warning($e);
+
             return false;
         }
     }
 
     /**
-     * @param Product $product
-     * @param UpdateProductRequest $request
+     * @param  Product  $product
+     * @param  UpdateProductRequest  $request
      * @return bool
+     *
      * @throws \Throwable
      */
     public function update(Product $product, UpdateProductRequest $request): bool
@@ -59,6 +64,7 @@ class ProductRepository implements ProductRepositoryContract
         } catch (\Exception $e) {
             DB::rollBack();
             logs()->warning($e);
+
             return false;
         }
     }

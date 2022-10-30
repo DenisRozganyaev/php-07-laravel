@@ -18,7 +18,7 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => fake()->unique()->words(rand(1, 2), true),
-            'description' => fake()->realText(rand(150, 350))
+            'description' => fake()->realText(rand(150, 350)),
         ];
     }
 }
