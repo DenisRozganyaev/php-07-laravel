@@ -18,7 +18,7 @@ class Phone implements Rule
         // +38(066)4221133
         preg_match('/\+[0-9]{2}\([0-9]{3}\)[0-9]{7}/', $value, $matches);
 
-        return !empty($matches);
+        return ! empty($matches);
     }
 
     /**

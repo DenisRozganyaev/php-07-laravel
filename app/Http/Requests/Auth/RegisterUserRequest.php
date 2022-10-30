@@ -23,7 +23,7 @@ class RegisterUserRequest extends FormRequest
         return array_merge(parent::messages(), [
             'name:min' => 'User name should be more than 2 symbols',
             'surname:min' => 'User name should be more than 2 symbols',
-            'phone' => 'Incorrect phone format (e.g. +00(000)00XX000)'
+            'phone' => 'Incorrect phone format (e.g. +00(000)00XX000)',
         ]);
     }
 
@@ -37,11 +37,10 @@ class RegisterUserRequest extends FormRequest
         return [
             'name' => ['required', 'min:2', 'max:35'],
             'surname' => ['required', 'min:2', 'max:50'],
-//            'surname' => 'required|min:2|max:50',
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['required', 'string', 'max:15', 'unique:users', new Phone],
             'birthdate' => ['required', 'date', 'before_or_equal:-18 years'],
-            'password' => ['required', 'confirmed', Password::default()]
+            'password' => ['required', 'confirmed', Password::default()],
         ];
     }
 }

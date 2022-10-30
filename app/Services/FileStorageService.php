@@ -16,7 +16,7 @@ class FileStorageService implements FileStorageServiceContract
             return str_replace('public/storage', '', $file);
         }
 
-        $filePath = 'public/' . static::randomName() . '.' . $file->getClientOriginalExtension();
+        $filePath = 'public/'.static::randomName().'.'.$file->getClientOriginalExtension();
 
         Storage::put($filePath, File::get($file));
 
@@ -30,10 +30,11 @@ class FileStorageService implements FileStorageServiceContract
 
     /**
      * asfbh2mssj_43243421
+     *
      * @return string
      */
     protected static function randomName(): string
     {
-        return Str::random() . '_' . time();
+        return Str::random().'_'.time();
     }
 }

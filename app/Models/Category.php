@@ -14,6 +14,7 @@ class Category extends Model
     /**
      * Has many products.
      * Product belongs to category. (fk: category_id)
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function products()

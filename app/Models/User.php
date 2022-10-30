@@ -25,7 +25,8 @@ class User extends Authenticatable
         'email',
         'password',
         'birthdate',
-        'role_id'
+        'role_id',
+        'telegram_id'
     ];
 
     /**
@@ -50,6 +51,7 @@ class User extends Authenticatable
     /**
      * Relation to roles table
      * belongsTo because have a role_id column
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function role()
@@ -60,6 +62,7 @@ class User extends Authenticatable
     /**
      * User has many orders.
      * Orders belong to user; (fk: user_id)
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function orders()
@@ -68,7 +71,42 @@ class User extends Authenticatable
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function wishes()
+    {
+        return $this->belongsToMany(
+            Product::class,
+            'wish_list',
+            'user_id',
+            'product_id'
+        );
+    }
+
+    /**
+     * @param Product $product
+     */
+    public function addToWish(Product $product)
+    {
+        $this->wishes()->attach($product);
+    }
+
+    /**
+     * @param Product $product
+     */
+    public function removeFromWish(Product $product)
+    {
+        $this->wishes()->detach($product);
+    }
+
+    public function isWishedProduct(Product $product)
+    {
+        return (bool)$this->wishes()->find($product->id);
+    }
+
+    /**
      * Mutators $user->is_admin
+     *
      * @return Attribute
      */
     public function isAdmin(): Attribute

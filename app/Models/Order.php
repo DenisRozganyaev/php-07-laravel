@@ -16,6 +16,7 @@ class Order extends Model
 
     /**
      * Because have a user_id column
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
@@ -30,6 +31,7 @@ class Order extends Model
 
     /**
      * Many to many with products
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function products()
@@ -48,7 +50,7 @@ class Order extends Model
     public function inProcess(): Attribute
     {
         return new Attribute(
-            get: fn() => $this->status->name === OrderStatusesEnum::InProcess->name
+            get: fn () => $this->status->name === OrderStatusesEnum::InProcess->name
         );
     }
 }
