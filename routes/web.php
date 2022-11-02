@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Auth\TelegramLoginController;
 use App\Models\Order;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,10 +19,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //Route::get('job', function() {
-////    dd('work');
-//    \Cache::store('redis')->put('Laradock', 'Awesome', 10);
-////   $order = Order::all()->last();
-////   \App\Jobs\OrderCreatedJob::dispatch($order)->onQueue('email'); // queue: default
+//    $order = Order::all()->last();
+//   \App\Jobs\OrderCreatedJob::dispatch($order)->onQueue('email'); // queue: default
+//});
+//
+//Route::get('invoice', function() {
+//    $order = Order::all()->last();
+//    $service = new \App\Services\InvoicesService();
+//    $invoice = $service->generate($order);
+//
+//    $invoice->save('s3');
+//    dd(Storage::temporaryUrl($invoice->filename, now()->addDays(7)));
 //});
 
 Auth::routes();
@@ -75,3 +84,7 @@ Route::prefix('paypal')->group(function () {
     Route::post('order/{orderId}/capture', [\App\Http\Controllers\Payments\PaypalController::class, 'capture']);
     Route::get('order/{orderId}/thankyou', [\App\Http\Controllers\Payments\PaypalController::class, 'thankYou']);
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

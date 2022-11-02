@@ -1,6 +1,6 @@
 <div class="col-md-4">
     <div class="card mb-4 shadow-sm">
-        <img src="{{ $product->thumbnailUrl }}" height="400" class="card-img-top"
+        <img src="{{ $product->thumbnailUrl }}" height="300" class="card-img-top"
              style="max-width: 100%; margin: 0 auto; display: block;">
         <div class="card-body">
             <p class="card-title">{{ __($product->title) }}</p>
