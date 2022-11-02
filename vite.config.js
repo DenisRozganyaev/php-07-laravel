@@ -3,16 +3,16 @@ import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
     server: {
-        host: '0.0.0.0'
+      host: '0.0.0.0'
     },
     plugins: [
         laravel({
             input: [
                 'resources/sass/app.scss',
                 'resources/js/app.js',
-                'resources/js/images-preview.js',
                 'resources/js/images-actions.js',
-                'resources/js/paypal-payments.js'
+                'resources/js/images-preview.js',
+                'resources/js/paypal-payments.js',
             ],
             refresh: true,
         }),
