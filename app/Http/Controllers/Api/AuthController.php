@@ -13,15 +13,22 @@ class AuthController extends Controller
 
         if (!auth()->attempt($fields)) {
             return response()->json([
-               'status' => 'error',
-               'data' => [
-                   'message' => 'Invalid credentials'
-               ]
+                'status' => 'error',
+                'data' => [
+                    'message' => 'Invalid credentials'
+                ]
             ], 422);
         }
 
+        $opts = $request->user()->is_admin
+            ? ['full']
+            : ['read'];
+
         return response()->json([
-            'token' => $request->user()->createToken($request->device_name ?? 'api')->plainTextToken
+            'status' => 'success',
+            'data' => [
+                'token' => $request->user()->createToken($request->device_name ?? 'api', $opts)->plainTextToken
+            ]
         ]);
     }
 }

@@ -16,6 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('auth', \App\Http\Controllers\Api\AuthController::class)->name('auth');
 
-Route::get('test', function() {
-    return response()->json(['text' => 'ok']);
-})->middleware('auth:sanctum');
+Route::prefix('v1')->middleware('auth:sanctum')->group(function() {
+    require __DIR__ . '/versions/v1.php';
+});
